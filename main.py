@@ -1,5 +1,5 @@
 import os
-diary_folder = os.path.join(os.getcwd,"diary")
+diary_folder = os.path.join(os.getcwd(),"diary")
 os.makedirs(diary_folder,exist_ok = True)
 while True:
     print('''Welcome to Personal Diary!
@@ -19,7 +19,7 @@ while True:
 
     match(x):
         case 1:
-             print("Let's write a new entry")
+             print("Let's write a new entry ")
              date=input("Enter date in the format ddmmyyyy ")
              if len(date) !=8 or not date.isdigit() or date.endswith('.txt'):
                 print("Enter date in correct format \n")
@@ -30,3 +30,19 @@ while True:
                 f.write("Title: " + text+"\n Date: " + date + "\n --------------------- \n")
                 string=input("Enter what happened all the day \n")
                 f.write(string)
+
+        case 2:
+            items=os.listdir(diary_folder)
+            print(items)
+            try:
+             file=input("Enter date to read file in ddmmyyyy ")
+             if len(file) !=8 or not file.isdigit() or file.endswith('.txt'):
+                print("Enter date in correct format \n")
+                continue
+             filename=os.path.join(diary_folder , file +'.txt')
+             with open(filename,'r') as f:
+                content=f.read()
+                print(content)
+            except FileNotFoundError:
+                print("No such file\n")
+                continue
