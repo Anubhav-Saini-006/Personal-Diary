@@ -46,3 +46,19 @@ while True:
             except FileNotFoundError:
                 print("No such file\n")
                 continue
+
+        case 3:
+            items=os.listdir(diary_folder)
+            print(items)
+            try:
+             file=input("Enter date to read file as ddmmyyyy ")
+             if len(file) !=8 or not file.isdigit() or file.endswith('.txt'):
+                print("Enter date in correct format \n")
+                continue
+             filename = os.path.join(diary_folder,file+'.txt')
+             with open(filename,'a') as f:
+                s=input("Enter what to add ")
+                f.write("\n"+s)
+            except FileNotFoundError:
+                print("No such file")
+                continue
