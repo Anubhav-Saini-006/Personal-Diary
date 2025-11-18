@@ -19,24 +19,28 @@ while True:
 
     match(x):
         case 1:
-             print("Let's write a new entry ")
-             date=input("Enter date in the format ddmmyyyy ")
-             if len(date) !=8 or not date.isdigit() or date.endswith('.txt'):
+             print("Let's write a new entry: ")
+             date=input("Enter date in the format ddmmyyyy: ")
+             if len(date) !=8 or not date.isdigit():
                 print("Enter date in correct format \n")
                 continue
              filename = os.path.join(diary_folder,date +'.txt')
-             with open(filename,'w') as f:
+             if os.path.exists(filename):
+                print("File already exists! ")
+                continue
+             else:
+               with open(filename,'w') as f:
                 text=input("Enter the title for the day ")
                 f.write("Title: " + text+"\n Date: " + date + "\n --------------------- \n")
-                string=input("Enter what happened all the day \n")
+                string=input("Enter what happened all the day: \n")
                 f.write(string)
 
         case 2:
             items=os.listdir(diary_folder)
             print(items)
             try:
-             file=input("Enter date to read file in ddmmyyyy ")
-             if len(file) !=8 or not file.isdigit() or file.endswith('.txt'):
+             file=input("Enter date to read file in ddmmyyyy: ")
+             if len(file) !=8 or not file.isdigit():
                 print("Enter date in correct format \n")
                 continue
              filename=os.path.join(diary_folder , file +'.txt')
@@ -51,14 +55,37 @@ while True:
             items=os.listdir(diary_folder)
             print(items)
             try:
-             file=input("Enter date to read file as ddmmyyyy ")
-             if len(file) !=8 or not file.isdigit() or file.endswith('.txt'):
+             file=input("Enter date to read file as ddmmyyyy: ")
+             if len(file) !=8 or not file.isdigit():
                 print("Enter date in correct format \n")
                 continue
              filename = os.path.join(diary_folder,file+'.txt')
              with open(filename,'a') as f:
-                s=input("Enter what to add ")
+                s=input("Enter what to add: ")
                 f.write("\n"+s)
             except FileNotFoundError:
                 print("No such file")
                 continue
+
+
+        case 4:
+            items=os.listdir(diary_folder)
+            print(items)
+            try:
+             file=input("Enter date to delete file as ddmmyyyy: ")
+             if len(file) !=8 or not file.isdigit():
+                print("Enter date in correct format \n")
+                continue
+             filename = os.path.join(diary_folder,file +'.txt')
+             os.remove(filename)
+             print("File Deleted \n")
+            except FileNotFoundError:
+                print("No such file")
+                continue
+
+        case 5:
+           print("Thank you for using this personal diary \n")
+           exit()
+
+        case _:
+            print("Please enter a number between 1 and 5")
